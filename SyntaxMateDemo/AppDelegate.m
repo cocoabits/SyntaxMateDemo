@@ -1,5 +1,7 @@
 #import "AppDelegate.h"
 
+#import "SyntaxMateHighlighter.h"
+
 #import <Cocoa/Cocoa.h>
 
 @interface AppDelegate () <NSApplicationDelegate>
@@ -10,7 +12,9 @@
 
 @end
 
-@implementation AppDelegate
+@implementation AppDelegate {
+	NSUInteger _counter;
+}
 
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification {
 	self.textView.font = [NSFont fontWithName:@"SFMono-Regular" size:NSFont.smallSystemFontSize] ?: [NSFont userFixedPitchFontOfSize:NSFont.smallSystemFontSize];
@@ -46,8 +50,35 @@
 				return;
 			}
 			weakSelf.textView.string = sourceCode;
+			[self highlightSourceCode];
 		});
 	});
+}
+
+- (void)highlightSourceCode {
+	static SyntaxMateHighlighter *highlighter = nil;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		highlighter = [[SyntaxMateHighlighter alloc] init];
+	});
+	NSUInteger counterBeforeRequest = [self counterBeforeRequest:YES];
+	typeof(self) __weak weakSelf = self;
+	NSTextStorage *textStorage = self.textView.textStorage;
+	[highlighter highlightSourceCode:[textStorage copy] withPath:self.textField.stringValue completion:^(NSAttributedString *highlightedSourceCode, NSError *error) {
+		if (highlightedSourceCode == nil) {
+			weakSelf.textView.string = [NSString stringWithFormat:@"%@", error];
+		} else if ([weakSelf counterBeforeRequest:NO] == counterBeforeRequest) {
+			[textStorage replaceCharactersInRange:NSMakeRange(0, textStorage.length) withAttributedString:highlightedSourceCode];
+		}
+	}];
+}
+
+- (NSUInteger)counterBeforeRequest:(BOOL)before {
+	NSParameterAssert(NSThread.isMainThread);
+	if (before) {
+		_counter += 1;
+	}
+	return _counter;
 }
 
 @end

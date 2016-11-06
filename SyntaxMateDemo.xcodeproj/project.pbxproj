@@ -11,6 +11,7 @@
 		DD65FDA61DCFA4C100D136EF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DD65FDA51DCFA4C100D136EF /* main.m */; };
 		DD65FDA81DCFA4C100D136EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD65FDA71DCFA4C100D136EF /* Assets.xcassets */; };
 		DD65FDAB1DCFA4C100D136EF /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD65FDA91DCFA4C100D136EF /* MainMenu.xib */; };
+		DD65FDB71DCFAAF000D136EF /* SyntaxMateHighlighter.m in Sources */ = {isa = PBXBuildFile; fileRef = DD65FDB61DCFAAF000D136EF /* SyntaxMateHighlighter.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,9 @@
 		DD65FDA71DCFA4C100D136EF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DD65FDAA1DCFA4C100D136EF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		DD65FDAC1DCFA4C100D136EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DD65FDB51DCFAAF000D136EF /* SyntaxMateHighlighter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyntaxMateHighlighter.h; sourceTree = "<group>"; };
+		DD65FDB61DCFAAF000D136EF /* SyntaxMateHighlighter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyntaxMateHighlighter.m; sourceTree = "<group>"; };
+		DD65FDB91DCFABFA00D136EF /* SyntaxMate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyntaxMate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,11 +57,7 @@
 		DD65FDA01DCFA4C100D136EF /* SyntaxMateDemo */ = {
 			isa = PBXGroup;
 			children = (
-				DD65FDA11DCFA4C100D136EF /* AppDelegate.h */,
-				DD65FDA21DCFA4C100D136EF /* AppDelegate.m */,
-				DD65FDA71DCFA4C100D136EF /* Assets.xcassets */,
-				DD65FDA91DCFA4C100D136EF /* MainMenu.xib */,
-				DD65FDAC1DCFA4C100D136EF /* Info.plist */,
+				DD65FDBA1DCFB39300D136EF /* Classes */,
 				DD65FDA41DCFA4C100D136EF /* Supporting Files */,
 			);
 			path = SyntaxMateDemo;
@@ -66,9 +66,24 @@
 		DD65FDA41DCFA4C100D136EF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				DD65FDA71DCFA4C100D136EF /* Assets.xcassets */,
+				DD65FDAC1DCFA4C100D136EF /* Info.plist */,
+				DD65FDA91DCFA4C100D136EF /* MainMenu.xib */,
 				DD65FDA51DCFA4C100D136EF /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DD65FDBA1DCFB39300D136EF /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				DD65FDB91DCFABFA00D136EF /* SyntaxMate.h */,
+				DD65FDB51DCFAAF000D136EF /* SyntaxMateHighlighter.h */,
+				DD65FDB61DCFAAF000D136EF /* SyntaxMateHighlighter.m */,
+				DD65FDA11DCFA4C100D136EF /* AppDelegate.h */,
+				DD65FDA21DCFA4C100D136EF /* AppDelegate.m */,
+			);
+			name = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -81,6 +96,7 @@
 				DD65FD9A1DCFA4C000D136EF /* Sources */,
 				DD65FD9B1DCFA4C000D136EF /* Frameworks */,
 				DD65FD9C1DCFA4C000D136EF /* Resources */,
+				DD65FDBB1DCFB86E00D136EF /* Replace SyntaxMate XPC */,
 			);
 			buildRules = (
 			);
@@ -137,11 +153,29 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		DD65FDBB1DCFB86E00D136EF /* Replace SyntaxMate XPC */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Replace SyntaxMate XPC";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "XPC_BUNDLE_NAME=\"SyntaxMate.xpc\"\nXPC_SRC_PATH=\"$HOME/build/TextMate/Applications/SyntaxMate/$XPC_BUNDLE_NAME\"\nXPC_FOLDER=\"$CONFIGURATION_BUILD_DIR/$CONTENTS_FOLDER_PATH/XPCServices\"\nXPC_DST_PATH=\"$XPC_FOLDER/$XPC_BUNDLE_NAME\"\nif [ -d \"$MOST_RECENT_APP_DIRECTORY_CONTENT\" ]\nthen\n\trm -r \"$MOST_RECENT_APP_DIRECTORY_CONTENT\"\nfi\nmkdir -p \"$XPC_FOLDER\"\ncp -r \"$XPC_SRC_PATH\" \"$XPC_DST_PATH\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		DD65FD9A1DCFA4C000D136EF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD65FDB71DCFAAF000D136EF /* SyntaxMateHighlighter.m in Sources */,
 				DD65FDA61DCFA4C100D136EF /* main.m in Sources */,
 				DD65FDA31DCFA4C100D136EF /* AppDelegate.m in Sources */,
 			);
