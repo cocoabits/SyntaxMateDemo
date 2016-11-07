@@ -1,0 +1,23 @@
+# Prevent Xcode files
+build
+xcuserdata
+*~.nib
+*.pbxuser
+*.perspective
+*.perspectivev3
+*.mode1v3
+*.mode2v3
+*.xcscmblueprint
+
+# Allow Xcode user's settings
+!default.mode1v3
+!default.mode2v3
+!default.pbxuser
+!default.perspectivev3
+!default.xcworkspace
+
+# Prevent AppCode files from indexing
+.idea
+
+# Prevent version file (used for the incremental build number)
+VERSION
