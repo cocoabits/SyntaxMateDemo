@@ -12,7 +12,7 @@ First, build the XPC Service:
 ```
 cd ~/Projects/textmate
 git fetch origin syntax-mate && git checkout syntax-mate && git pull
-ninja SyntaxMate
+./configure && ninja SyntaxMate
 ```
 
 Next, open `.xcodeproj`, Build and Run.
