@@ -11,8 +11,9 @@ First, build the XPC Service:
 
 ```
 cd ~/Projects/textmate
-git fetch origin syntax-mate && git checkout syntax-mate && git pull
+git fetch origin master && git checkout master && git pull
 ./configure && ninja SyntaxMate
+open ~/build/TextMate/Applications/SyntaxMate/
 ```
 
-Next, open `.xcodeproj`, Build and Run.
+Next, open `SyntaxMateDemo.xcodeproj`, Build and Run.
