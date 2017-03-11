@@ -50,7 +50,7 @@
 				return;
 			}
 			weakSelf.textView.string = sourceCode;
-			[self highlightSourceCode];
+			[weakSelf highlightSourceCode];
 		});
 	});
 }
